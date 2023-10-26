@@ -238,7 +238,8 @@ PRODUCT_PACKAGES += \
     KTools \
     SchPwrOnOff \
     DocumentsUI \
-    LatinIME
+    LatinIME \
+    USB_middle_man
 
 ifeq ($(BUILD_WITH_GAPPS_CONFIG),true)
 
