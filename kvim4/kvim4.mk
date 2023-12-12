@@ -242,6 +242,10 @@ PRODUCT_PACKAGES += \
     USB_middle_man \
     FlatfrogBoard
 
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.sys.show_upper_bar=0 \
+	persist.sys.show_bottom_bar=0
+
 ifeq ($(BUILD_WITH_GAPPS_CONFIG),true)
 
 else
