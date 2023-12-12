@@ -239,7 +239,8 @@ PRODUCT_PACKAGES += \
     SchPwrOnOff \
     DocumentsUI \
     LatinIME \
-    USB_middle_man
+    USB_middle_man \
+    FlatfrogBoard
 
 ifeq ($(BUILD_WITH_GAPPS_CONFIG),true)
 
