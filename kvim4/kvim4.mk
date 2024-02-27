@@ -208,8 +208,22 @@ PRODUCT_BRAND := Amlogic
 PRODUCT_MODEL := kvim4
 PRODUCT_MANUFACTURER := Amlogic
 
+include ffbuild/config.mk
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.build.display.id=$(shell cat ffbuild/.version)
+        ro.build.display.id=$(FLATFROG_PRODUCT_VERSION)
+
+ifneq (,$(filter $(FLATFROG_PRODUCT_TRACK),dev test))
+	FLATFROG_OTA_ENABLED := 0
+else
+	FLATFROG_OTA_ENABLED := 1
+endif
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.flatfrog.product=$(FLATFROG_PRODUCT_NAME) \
+	ro.flatfrog.track=$(FLATFROG_PRODUCT_TRACK) \
+	persist.updater.ota_enabled=$(FLATFROG_OTA_ENABLED) \
+	persist.updater.ota_url=https://update-$(FLATFROG_PRODUCT_TRACK).flatfrogboard.com/api/dus/v1/ota
+
 
 PRODUCT_TYPE := tv
 # Non updatable APEX
