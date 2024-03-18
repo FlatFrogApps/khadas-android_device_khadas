@@ -225,8 +225,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.flatfrog.product=$(FLATFROG_PRODUCT_NAME) \
 	ro.flatfrog.track=$(FLATFROG_PRODUCT_TRACK) \
 	persist.updater.ota_enabled=$(FLATFROG_OTA_ENABLED) \
-	persist.updater.ota_url=https://update-$(FLATFROG_PRODUCT_TRACK).flatfrogboard.com/api/dus/v1/ota
-
+	persist.updater.ota_url=https://update-$(FLATFROG_PRODUCT_TRACK).flatfrogapi.com/api/dus/v1/ota
 
 PRODUCT_TYPE := tv
 # Non updatable APEX
