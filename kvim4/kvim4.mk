@@ -212,11 +212,14 @@ include ffbuild/config.mk
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.build.display.id=$(FLATFROG_PRODUCT_VERSION)
 
-ifneq (,$(filter $(FLATFROG_PRODUCT_TRACK),dev test))
-	FLATFROG_OTA_ENABLED := 0
-else
-	FLATFROG_OTA_ENABLED := 1
-endif
+#tracks := dev test
+#ifneq (,$(filter $(FLATFROG_PRODUCT_TRACK),$(tracks)))
+#	# $(FLATFROG_PRODUCT_TRACK) equals any of $(tracks)
+#	FLATFROG_OTA_ENABLED := 0
+#else
+#	FLATFROG_OTA_ENABLED := 1
+#endif
+FLATFROG_OTA_ENABLED := 1
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.flatfrog.product=$(FLATFROG_PRODUCT_NAME) \
