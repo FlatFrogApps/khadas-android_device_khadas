@@ -227,6 +227,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.updater.ota_enabled=$(FLATFROG_OTA_ENABLED) \
 	persist.updater.ota_url=https://update-$(FLATFROG_PRODUCT_TRACK).flatfrogapi.com/api/dus/v1/ota
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/android_bg.png:$(TARGET_COPY_OUT_VENDOR)/etc/default_wallpaper.png
+
 PRODUCT_TYPE := tv
 # Non updatable APEX
 OVERRIDE_TARGET_FLATTEN_APEX := true
