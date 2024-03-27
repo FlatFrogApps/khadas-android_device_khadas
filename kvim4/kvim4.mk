@@ -208,7 +208,10 @@ PRODUCT_BRAND := Amlogic
 PRODUCT_MODEL := kvim4
 PRODUCT_MANUFACTURER := Amlogic
 
-include ffbuild/config.mk
+# some build targets, e.g. "clean", parse this config file
+# but does not necessarily have a valid product config,
+# therefore config.mk is optional
+-include ffbuild/config.mk
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.build.display.id=$(FLATFROG_PRODUCT_VERSION)
 
