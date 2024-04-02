@@ -175,7 +175,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 TARGET_WITH_TV_AUDIO_MODE := true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.hdmi.keep_awake=false
+    persist.sys.hdmi.keep_awake=true
 
 #userdebug, eng, AOSP version default disable AVB
 ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
