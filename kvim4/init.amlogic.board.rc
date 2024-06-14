@@ -66,11 +66,11 @@ on property:sys.boot_completed=1
     write /sys/class/graphics/fb2/game_mode 1
 
 # add EM06 4G
-#service ril-daemon /vendor/bin/hw/rild -l /vendor/lib64/libquectel-ril.so
-#    class main
-#    user root
-#    group radio cache inet misc audio sdcard_rw log
-#    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
+service ril-daemon /vendor/bin/hw/rild -l /vendor/lib64/libquectel-ril.so
+    class main
+    user root
+    group radio cache inet misc audio sdcard_rw log
+    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
 service preinstall /system/bin/preinstall.sh
     user root
