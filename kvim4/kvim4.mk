@@ -518,30 +518,30 @@ PRODUCT_COPY_FILES += \
     device/khadas/$(PRODUCT_DIR)/ueventd.parallel.rc:$(TARGET_COPY_OUT_ODM)/ueventd.rc
 
 # add EM06 4G
-PRODUCT_PROPERTY_OVERRIDES += ro.telephony.default_network=9
-PRODUCT_PACKAGES += \
-    rild \
-    dhcptool \
-    TeleService \
-    TelephonyProvider
+#PRODUCT_PROPERTY_OVERRIDES += ro.telephony.default_network=9
+#PRODUCT_PACKAGES += \
+#    rild \
+#    dhcptool \
+#    TeleService \
+#    TelephonyProvider
 
-PRODUCT_COPY_FILES += \
-    device/khadas/kvim4/ril/libquectel-ril/chat:system/bin/chat \
-    device/khadas/kvim4/ril/libquectel-ril/libquectel-ril.so:vendor/lib64/libquectel-ril.so \
-    device/khadas/kvim4/ril/libquectel-ril/ip-up:system/etc/ppp/ip-up \
-    device/khadas/kvim4/ril/libquectel-ril/ip-down:system/etc/ppp/ip-down \
-    device/khadas/kvim4/ril/apns-conf.xml:system/etc/apns-conf.xml
+#PRODUCT_COPY_FILES += \
+#    device/khadas/kvim4/ril/libquectel-ril/chat:system/bin/chat \
+#    device/khadas/kvim4/ril/libquectel-ril/libquectel-ril.so:vendor/lib64/libquectel-ril.so \
+#    device/khadas/kvim4/ril/libquectel-ril/ip-up:system/etc/ppp/ip-up \
+#    device/khadas/kvim4/ril/libquectel-ril/ip-down:system/etc/ppp/ip-down \
+#    device/khadas/kvim4/ril/apns-conf.xml:system/etc/apns-conf.xml
 
 # GPS HAL
-PRODUCT_COPY_FILES += \
-	device/khadas/kvim4/ril/gps_cfg.inf:vendor/etc/gps_cfg.inf \
-	device/khadas/kvim4/ril/gps.default.so:vendor/lib64/hw/gps.default.so
+#PRODUCT_COPY_FILES += \
+#	device/khadas/kvim4/ril/gps_cfg.inf:vendor/etc/gps_cfg.inf \
+#	device/khadas/kvim4/ril/gps.default.so:vendor/lib64/hw/gps.default.so
 
 #gnss hal
-PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0 \
-    android.hardware.gnss@1.0-impl \
-    android.hardware.gnss@1.0-service
+#PRODUCT_PACKAGES += \
+#    android.hardware.gnss@1.0 \
+#    android.hardware.gnss@1.0-impl \
+#    android.hardware.gnss@1.0-service
 
 #add end
 
