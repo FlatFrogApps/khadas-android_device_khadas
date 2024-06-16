@@ -260,9 +260,9 @@ PRODUCT_PACKAGES += \
     KTools \
     SchPwrOnOff \
     DocumentsUI \
-    LatinIME \
     USB_middle_man \
-    FlatfrogBoard
+    FlatfrogBoard \
+    FFKeyboard
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.sys.show_upper_bar=0 \
