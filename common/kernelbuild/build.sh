@@ -764,6 +764,7 @@ echo " Files copied to device dir"
 DTBTOOL=${ROOT_DIR}/device/khadas/common/kernelbuild/dtbTool
 DTCTOOL=${ROOT_DIR}/device/khadas/common/kernelbuild/dtc
 DTIMGTOOL=${ROOT_DIR}/device/khadas/common/kernelbuild/mkdtimg
+DTCPPTOOL="${CC} -E -P -nostdinc -I ${ROOT_DIR}/common/include/ -I ${ROOT_DIR}/arch -undef -x assembler-with-cpp"
 
 rm -rf ${ROOT_DIR}/${PRODUCT_DIRNAME}-kernel/5.4/lib/*
 mkdir -p ${ROOT_DIR}/${PRODUCT_DIRNAME}-kernel/5.4/lib/firmware/video/
@@ -838,10 +839,41 @@ fi
 echo "===build dtbo==="
 if [ $KERNEL_A32_SUPPORT ]; then
     ${DTCTOOL} -@ -O dtb -o ${OUT_DIR}/${DTBO_DEVICETREE}.dtbo common/arch/arm/boot/dts/amlogic/${DTBO_DEVICETREE}.dts
+    ${DTIMGTOOL} create ${ROOT_DIR}/${PRODUCT_DIRNAME}-kernel/5.4/dtbo.img ${OUT_DIR}/${DTBO_DEVICETREE}.dtbo
 else
-    ${DTCTOOL} -@ -O dtb -o ${OUT_DIR}/${DTBO_DEVICETREE}.dtbo common/arch/arm64/boot/dts/amlogic/${DTBO_DEVICETREE}.dts
+    source ${ROOT_DIR}/ffbuild/.config
+    OVERLAY_BASE=${DTBO_DEVICETREE}_${CONFIGURED_PRODUCT}_
+
+    SRC_DIR=common/arch/arm64/boot/dts/amlogic/
+    DST_DIR=${OUT_DIR}/arch/arm64/boot/dts/amlogic/
+
+    SRC_OVERLAYS="$(find ${SRC_DIR} -name "${OVERLAY_BASE}*.dts" | sort)"
+    DST_OVERLAYS=
+
+    if [ -n "${SRC_OVERLAYS}" ]; then
+        for src_overlay in ${SRC_OVERLAYS}; do
+            dst_overlay=${src_overlay/.dts/.dtbo}
+            dst_overlay=${dst_overlay//${SRC_DIR}/${DST_DIR}}
+
+            # preprocess C-style includes
+            tmp_overlay=${dst_overlay/.dtbo/.dts.pre}
+            ${DTCPPTOOL} ${src_overlay} -o ${tmp_overlay}
+
+            ${DTCTOOL} -@ -I dts -O dtb -o ${dst_overlay} ${tmp_overlay}
+            rm -f ${tmp_overlay}
+
+            DST_OVERLAYS="${DST_OVERLAYS} ${dst_overlay}"
+        done
+    else
+        # add a default overlay
+        ${DTCTOOL} -@ -O dtb -o ${OUT_DIR}/${DTBO_DEVICETREE}.dtbo common/arch/arm64/boot/dts/amlogic/${DTBO_DEVICETREE}.dts
+        DST_OVERLAYS=${OUT_DIR}/${DTBO_DEVICETREE}.dtbo
+    fi
+
+    ${DTIMGTOOL} create ${ROOT_DIR}/${PRODUCT_DIRNAME}-kernel/5.4/dtbo.img ${DST_OVERLAYS}
 fi
-${DTIMGTOOL} create ${ROOT_DIR}/${PRODUCT_DIRNAME}-kernel/5.4/dtbo.img ${OUT_DIR}/${DTBO_DEVICETREE}.dtbo
+
+
 if [ $? -ne 0 ]; then
     echo "build dtbo error"
     exit 1
