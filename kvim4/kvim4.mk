@@ -228,7 +228,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.flatfrog.product=$(FLATFROG_PRODUCT_NAME) \
 	ro.flatfrog.track=$(FLATFROG_PRODUCT_TRACK) \
 	persist.updater.ota_enabled=$(FLATFROG_OTA_ENABLED) \
-	persist.updater.ota_url=https://update-$(FLATFROG_PRODUCT_TRACK).flatfrogapi.com/api/dus/v1/ota
+	persist.updater.ota_url=$(FLATFROG_PRODUCT_OTA_URL)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/android_bg.png:$(TARGET_COPY_OUT_VENDOR)/etc/default_wallpaper.png
