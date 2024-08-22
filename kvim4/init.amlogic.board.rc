@@ -57,6 +57,12 @@ on boot
     chmod 666 /dev/vbi
     mount debugfs debugfs /sys/kernel/debug mode=755
 
+    #LEDs
+    chmod 666 /sys/class/leds/solid_led/brightness
+    chmod 666 /sys/class/leds/solid_led/red_led/brightness
+    chmod 666 /sys/class/leds/solid_led/green_led/brightness
+    chmod 666 /sys/class/leds/solid_led/blue_led/brightness
+
 on property:ro.boot.oem.key1=*
     setprop ro.oem.key1 ${ro.boot.oem.key1}
 
