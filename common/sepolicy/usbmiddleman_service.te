@@ -1,0 +1,86 @@
+type usbmiddleman_service, domain;
+type usbmiddleman_service_exec, exec_type, file_type;
+
+init_daemon_domain(usbmiddleman_service)
+
+allow usbmiddleman_service rootfs:dir search;
+
+allow usbmiddleman_service self:dir search;
+#allow usbmiddleman_service self:file { entrypoint read execute getattr map };
+allow usbmiddleman_service self:udp_socket { read };
+allow usbmiddleman_service self:unix_dgram_socket { connect create read write };
+allow usbmiddleman_service self:unix_stream_socket { create bind listen accept connect read write getopt };
+allow usbmiddleman_service self:process { fork getsched };
+allow usbmiddleman_service self:lnk_file read;
+
+allow usbmiddleman_service init:fd { use };
+
+allow usbmiddleman_service logd:unix_dgram_socket { sendto };
+allow usbmiddleman_service logdw_socket:sock_file write;
+
+allow usbmiddleman_service null_device:chr_file { write getattr ioctl open read };
+allow usbmiddleman_service usb_device:chr_file { open read write ioctl };
+allow usbmiddleman_service usb_device:dir { search open read };
+allow usbmiddleman_service uhid_device:chr_file { open read write ioctl };
+
+allow usbmiddleman_service apex_mnt_dir:dir search;
+
+allow usbmiddleman_service sysfs:dir { getattr search read open };
+allow usbmiddleman_service sysfs:file { read open };
+allow usbmiddleman_service sysfs:filesystem getattr;
+allow usbmiddleman_service sysfs:lnk_file read;
+allow usbmiddleman_service configfs:dir { add_name getattr search read write };
+allow usbmiddleman_service configfs:file { getattr open read};
+allow usbmiddleman_service configfs:lnk_file create;
+allow usbmiddleman_service labeledfs:filesystem getattr;
+allow usbmiddleman_service debugfs:dir search;
+
+allow usbmiddleman_service heapprofd_prop:file { getattr map open read };
+allow usbmiddleman_service linkerconfig_file:file { getattr open read };
+allow usbmiddleman_service linkerconfig_file:dir search;
+allow usbmiddleman_service same_process_hal_file:dir { getattr search };
+allow usbmiddleman_service system_file:dir { getattr read search };
+allow usbmiddleman_service system_lib_file:dir { getattr search };
+allow usbmiddleman_service system_lib_file:file { execute getattr map open read };
+allow usbmiddleman_service system_lib_file:lnk_file read;
+allow usbmiddleman_service vendor_file:dir { getattr search };
+allow usbmiddleman_service vendor_hal_file:dir getattr;
+
+allow usbmiddleman_service vendor_socket_hook_prop:file { getattr map open read };
+allow usbmiddleman_service vndk_prop:file { getattr map open read };
+allow usbmiddleman_service debug_prop:file { getattr map open read };
+allow usbmiddleman_service exported2_default_prop:file { getattr map open read };
+allow usbmiddleman_service log_tag_prop:file { getattr map open read };
+allow usbmiddleman_service logd_prop:file { getattr map open read };
+
+allow usbmiddleman_service system_linker_exec:file { open execute map read };
+allow usbmiddleman_service system_linker_exec:lnk_file read;
+
+allow usbmiddleman_service proc:dir search;
+allow usbmiddleman_service proc:lnk_file read;
+allow usbmiddleman_service properties_device:dir { getattr search };
+allow usbmiddleman_service properties_serial:file { getattr map open read };
+allow usbmiddleman_service property_info:file { getattr map open read };
+allow usbmiddleman_service random_device:chr_file read;
+allow usbmiddleman_service shell_exec:chr_file { execute execute_no_trans read open };
+allow usbmiddleman_service device:dir search;
+
+allow usbmiddleman_service pmsg_device:chr_file { open write };
+allow usbmiddleman_service self:fifo_file { getattr open read write };
+allow usbmiddleman_service socket_device:dir search;
+
+allow usbmiddleman_service owntty_device:chr_file { open read write };
+allow usbmiddleman_service system_file:lnk_file read;
+#allow usbmiddleman_service toolbox_exec:file { execute getattr };
+
+#============= systemserver ==============
+allow system_server usbmiddleman_service:dir { search getattr };
+allow system_server usbmiddleman_service:file { open read getattr };
+
+#============= logd ==============
+allow logd usbmiddleman_service:dir { search };
+allow logd usbmiddleman_service:file { open read getattr};
+
+#blocked by domain neverallow rules
+#allow usbmiddleman_service device:chr_file { open write };
+#allow usbmiddleman_service shell_exec:file { execute execute_no_trans open read getattr map};
