@@ -6,3 +6,5 @@
 
 #user=_app seinfo=platform name=com.droidlogic.tvsource domain=aml_core_app type=app_data_file
 #user=_app seinfo=platform name=com.droidlogic.tvinput domain=aml_core_app type=app_data_file
+#levelFrom=none is used here to prevent MLS constraints with usbmiddleman_service
+user=system seinfo=platform name=com.flatfrog.FFBoard domain=ffboard_app type=app_data_file levelFrom=none

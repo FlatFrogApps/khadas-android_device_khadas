@@ -1,0 +1,115 @@
+type ffboard_app, domain, appdomain;
+type ffboard_exec, exec_type, file_type;
+type_transition zygote ffboard_exec:file ffboard_app;
+
+allow ffboard_app usbmiddleman_service:unix_stream_socket connectto;
+
+allow ffboard_app user_profile_data_file:dir search;
+allow ffboard_app user_profile_data_file:file { open read write };
+
+#neverallow(domain)allow ffboard_app app_data_file:dir { add_name remove_name search write };
+allow ffboard_app app_data_file:file { getattr rename setattr };
+#allow ffboard_app apk_data_file:dir write;
+allow ffboard_app apk_data_file:file { map read };
+allow ffboard_app sysfs_thermal:file { getattr open read };
+allow ffboard_app sysfs_display:file { open write };
+allow ffboard_app sysfs_leds:dir search;
+allow ffboard_app status_leds:dir { search };
+allow ffboard_app status_leds:file { read write };
+allow ffboard_app appdomain_tmpfs:file write;
+allow ffboard_app tmpfs:file { read write execute map };
+allow ffboard_app debugfs_mali:dir search;
+allow ffboard_app shell_data_file:dir search;
+allow ffboard_app shell_exec:file { execute execute_no_trans map open read };
+#allow ffboard_app system_app:file { open read };
+allow ffboard_app vendor_file:file { execute execute_no_trans open read };
+allow ffboard_app wpa_data_file:dir { add_name remove_name search write };
+allow ffboard_app wpa_data_file:sock_file { create setattr unlink write };
+
+allow ffboard_app self:netlink_route_socket { create nlmsg_readpriv read write nlmsg_read};
+allow ffboard_app self:tcp_socket { create getopt read write accept connect getattr setopt shutdown bind name_bind node_bind listen};
+allow ffboard_app self:udp_socket { bind create getopt read write connect getattr ioctl setopt shutdown };
+#allow ffboard_app self:capability { setgid setuid };
+#allow ffboard_app sysfs:file { getattr open read write };
+#allow ffboard_app su_exec:file { execute execute_no_trans getattr map open read };
+
+#allow ffboard_app hal_configstore_ISurfaceFlingerConfigs:hwservice_manager find;
+#allow ffboard_app hal_graphics_composer_default:fd use;
+#allow ffboard_app hal_allocator_default:file read;
+#allow ffboard_app hal_atrace_default:file read;
+#allow ffboard_app hal_gatekeeper_default:file read;
+#allow ffboard_app hal_ir_default:file read;
+#allow ffboard_app hal_keymaster_default:file read;
+#allow ffboard_app hal_light_default:file read;
+#allow ffboard_app hal_memtrack_default:file read;
+#allow ffboard_app hal_neuralnetworks_adla:file read;
+#allow ffboard_app hal_oemlock_default:file read;
+#allow ffboard_app hal_thermal_default:file read;
+#allow ffboard_app hal_tv_cec_default:file read;
+#allow ffboard_app hal_tv_input_default:file read;
+#allow ffboard_app hal_usb_default:file read;
+
+allow ffboard_app dnsproxyd_socket:sock_file write;
+
+allow ffboard_app servicemanager:dir search;
+#allow ffboard_app servicemanager:file { open read };
+#allow ffboard_app hwservicemanager:file read;
+
+allow ffboard_app fwmarkd_socket:sock_file write;
+allow ffboard_app netd:unix_stream_socket connectto;
+allow ffboard_app init:unix_stream_socket connectto; #why?
+allow ffboard_app statsd:unix_dgram_socket sendto;
+allow ffboard_app isolated_app:unix_stream_socket read;
+allow ffboard_app port:tcp_socket name_bind;
+allow ffboard_app port:udp_socket name_bind;
+allow ffboard_app property_socket:sock_file write;
+allow ffboard_app system_server:binder { call transfer };
+allow ffboard_app system_server:unix_stream_socket read;
+allow ffboard_app node:udp_socket node_bind;
+allow ffboard_app node:tcp_socket node_bind;
+allow ffboard_app hal_wifi_supplicant_default:unix_dgram_socket sendto;
+
+allow ffboard_app autofill_service:service_manager find;
+allow ffboard_app clipboard_service:service_manager find;
+allow ffboard_app hal_graphics_mapper_hwservice:hwservice_manager find;
+allow ffboard_app servicediscovery_service:service_manager find;
+allow ffboard_app radio_service:service_manager find;
+allow ffboard_app gpu_service:service_manager find;
+allow ffboard_app activity_task_service:service_manager find;
+allow ffboard_app activity_service:service_manager find;
+allow ffboard_app mediaserver_service:service_manager find;
+allow ffboard_app tv_input_service:service_manager find;
+allow ffboard_app bluetooth_manager_service:service_manager find;
+allow ffboard_app device_identifiers_service:service_manager find;
+allow ffboard_app device_policy_service:service_manager find;
+allow ffboard_app webviewupdate_service:service_manager find;
+allow ffboard_app wifi_service:service_manager find;
+allow ffboard_app wifip2p_service:service_manager find;
+allow ffboard_app surfaceflinger_service:service_manager find;
+allow ffboard_app surfaceflinger:binder transfer;
+allow ffboard_app surfaceflinger:fd use;
+allow ffboard_app tethering_service:service_manager find;
+allow ffboard_app thermal_service:service_manager find;
+allow ffboard_app uimode_service:service_manager find;
+allow ffboard_app usb_service:service_manager find;
+allow ffboard_app gpuservice:binder call;
+
+#============= isolated_app ==============
+allow isolated_app ffboard_app:fd use;
+allow isolated_app ffboard_app:unix_stream_socket write;
+
+#============= netd ==============
+allow netd ffboard_app:fd use;
+allow netd ffboard_app:tcp_socket { read write getopt setopt };
+allow netd ffboard_app:udp_socket { read write getopt setopt };
+
+#============= surfaceflinger ==============
+allow surfaceflinger ffboard_app:binder { call transfer };
+allow surfaceflinger ffboard_app:fd use;
+
+#============= system_server ==============
+allow system_server ffboard_app:binder { call transfer };
+allow system_server ffboard_app:process { getpgid setsched sigkill };
+
+#============= hal_wifi_supplicant_default ==============
+allow hal_wifi_supplicant_default ffboard_app:unix_dgram_socket sendto;
