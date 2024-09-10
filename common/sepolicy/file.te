@@ -112,3 +112,6 @@ type aml_dsm_device, fs_type,sysfs_type;
 
 # ntfs3
 type ntfs3, sdcard_type, fs_type, mlstrustedobject;
+
+# LEDs
+type status_leds, fs_type, sysfs_type;
